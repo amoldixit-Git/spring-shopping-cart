@@ -17,10 +17,8 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import com.amol.poc.ShoppingCart.service.ProductService;
-import com.amol.poc.ShoppingCart.service.SalesTaxService;
-import com.amol.poc.ShoppingCart.service.impl.ProductServiceImpl;
-import com.amol.poc.ShoppingCart.service.impl.SalesTaxServiceImpl;
+import com.amol.poc.ShoppingCart.service.DataService;
+import com.amol.poc.ShoppingCart.service.impl.DataServiceImpl;
  
 @Configuration
 @ComponentScan("com.amol.poc.ShoppingCart.*")
@@ -88,13 +86,9 @@ public class ApplicationContextConfig {
         return transactionManager;
     }
  
-    @Bean(name = "productService")
-    public ProductService getProductService() {
-        return new ProductServiceImpl();
+    @Bean(name = "dataService")
+    public DataService getDataService() {
+        return new DataServiceImpl();
     }
     
-    @Bean(name = "salesTaxService")
-    public SalesTaxService getSalesTaxService() {
-        return new SalesTaxServiceImpl();
-    }
 }

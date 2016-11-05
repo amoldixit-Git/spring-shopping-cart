@@ -1,0 +1,17 @@
+CREATE DATABASE `shoppingcart`;
+
+CREATE TABLE `product` (
+  `code` varchar(20) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `price` double NOT NULL,
+  `category` varchar(1) NOT NULL,
+  PRIMARY KEY (`code`),
+  KEY `TAX_CATEGORY_FK` (`category`),
+  CONSTRAINT `TAX_CATEGORY_FK` FOREIGN KEY (`category`) REFERENCES `taxcategory` (`category`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `taxcategory` (
+  `category` varchar(1) NOT NULL,
+  `salestax` double NOT NULL,
+  PRIMARY KEY (`category`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -1,11 +1,9 @@
 com\amol\poc\ShoppingCart\config\ApplicationContextConfig.class
 com\amol\poc\ShoppingCart\model\CartLineInfo.class
-com\amol\poc\ShoppingCart\model\ProductInfo.class
 com\amol\poc\ShoppingCart\controller\MainController.class
-com\amol\poc\ShoppingCart\config\SpringWebAppInitializer.class
 com\amol\poc\ShoppingCart\entity\SalesTax.class
 com\amol\poc\ShoppingCart\model\CartInfo.class
 com\amol\poc\ShoppingCart\entity\Product.class
 com\amol\poc\ShoppingCart\model\Summary.class
+com\amol\poc\ShoppingCart\config\SpringWebAppInitializer.class
 com\amol\poc\ShoppingCart\util\Utils.class
-com\amol\poc\ShoppingCart\model\SalesTaxInfo.class

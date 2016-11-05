@@ -1,7 +1,9 @@
 package com.amol.poc.ShoppingCart.model;
 
+import com.amol.poc.ShoppingCart.entity.Product;
+
 public class CartLineInfo {
-	private ProductInfo productInfo;
+	private Product product;
     private int quantity;
     private double salesTax;
     private double subTotal;
@@ -12,12 +14,12 @@ public class CartLineInfo {
     	this.subTotal = 0;
     	this.totalSalesTax = 0;
     }
-	public ProductInfo getProductInfo() {
-		return productInfo;
+	public Product getProduct() {
+		return product;
 	}
 	
-	public void setProductInfo(ProductInfo productInfo) {
-		this.productInfo = productInfo;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 	
 	public int getQuantity() {

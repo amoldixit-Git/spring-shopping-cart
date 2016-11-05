@@ -19,10 +19,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import com.amol.poc.ShoppingCart.entity.Product;
 import com.amol.poc.ShoppingCart.model.CartInfo;
 import com.amol.poc.ShoppingCart.model.CartLineInfo;
-import com.amol.poc.ShoppingCart.model.ProductInfo;
 import com.amol.poc.ShoppingCart.model.Summary;
-import com.amol.poc.ShoppingCart.service.ProductService;
-import com.amol.poc.ShoppingCart.service.SalesTaxService;
+import com.amol.poc.ShoppingCart.service.DataService;
 import com.amol.poc.ShoppingCart.util.Utils;
 
 @Controller
@@ -33,9 +31,7 @@ import com.amol.poc.ShoppingCart.util.Utils;
 public class MainController {
 
 	@Autowired
-	private ProductService productService;
-	@Autowired
-	private SalesTaxService salesTaxService;
+	private DataService dataService;
 
 	@InitBinder
 	public void myInitBinder(WebDataBinder dataBinder) {
@@ -58,10 +54,9 @@ public class MainController {
  
     // Product List page.
     @RequestMapping({"/productList"})
-    public String listProductHandler(Model model, //
-            @RequestParam(value = "name", defaultValue = "") String likeName) {
+    public String listProductHandler(Model model) {
  
-        List<ProductInfo> result = productService.queryProducts(likeName);
+    	List<Product> result = dataService.getProductList();
  
         model.addAttribute("listOfProducts", result);
         return "productList";
@@ -73,16 +68,14 @@ public class MainController {
  
         Product product = null;
         if (code != null && code.length() > 0) {
-            product = productService.findProduct(code);
+            product = dataService.getProductByCode(code);
         }
         if (product != null) {
  
             // Cart info stored in Session.
             CartInfo cartInfo = Utils.getCartInSession(request);
  
-            ProductInfo productInfo = new ProductInfo(product);
- 
-            cartInfo.addProduct(productInfo, 1);
+            cartInfo.addProduct(product, 1);
         }
         // Redirect to shoppingCart page.
         return "redirect:/shoppingCart";
@@ -93,16 +86,14 @@ public class MainController {
             @RequestParam(value = "code", defaultValue = "") String code) {
         Product product = null;
         if (code != null && code.length() > 0) {
-            product = productService.findProduct(code);
+            product = dataService.getProductByCode(code);
         }
         if (product != null) {
  
             // Cart Info stored in Session.
             CartInfo cartInfo = Utils.getCartInSession(request);
  
-            ProductInfo productInfo = new ProductInfo(product);
- 
-            cartInfo.removeProduct(productInfo);
+            cartInfo.removeProduct(product);
  
         }
         // Redirect to shoppingCart page.
@@ -144,8 +135,8 @@ public class MainController {
         Double total = 0.0;
         Double tax = 0.0;
         for (CartLineInfo cartlineInfo : cartInfo.getCartLines()){
-        	double salesTax = salesTaxService.findSalesTaxInfo(cartlineInfo.getProductInfo().getCategory()).getSalesTax();
-        	double price = cartlineInfo.getProductInfo().getPrice();
+        	double salesTax = dataService.findSalesTax(cartlineInfo.getProduct().getCategory()).getTaxPercentage();
+        	double price = cartlineInfo.getProduct().getPrice();
 			int quantity = cartlineInfo.getQuantity();
 			
 			cartlineInfo.setSalesTax(salesTax);

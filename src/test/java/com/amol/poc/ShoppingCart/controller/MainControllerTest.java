@@ -23,11 +23,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 import com.amol.poc.ShoppingCart.config.ApplicationContextConfig;
+import com.amol.poc.ShoppingCart.entity.Product;
 import com.amol.poc.ShoppingCart.model.CartInfo;
 import com.amol.poc.ShoppingCart.model.CartLineInfo;
-import com.amol.poc.ShoppingCart.model.ProductInfo;
-import com.amol.poc.ShoppingCart.service.ProductService;
-import com.amol.poc.ShoppingCart.service.SalesTaxService;
+import com.amol.poc.ShoppingCart.service.DataService;
 @WebAppConfiguration
 @ContextConfiguration (classes = {ApplicationContextConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -36,13 +35,11 @@ public class MainControllerTest {
 	private WebApplicationContext wac;
 	private MockMvc mockMvc;
 	@Autowired
-	private ProductService productServiceMock;
-	@Autowired
-	private SalesTaxService salesTaxServiceMock;
+	private DataService dataServiceMock;
 
     private MainController mainController;
-	private static ProductInfo productInfoOne;
-	private static ProductInfo productInfoTwo;
+	private static Product productOne;
+	private static Product productTwo;
 	private static CartInfo cartInfo;
 
     public MainControllerTest() {
@@ -50,12 +47,12 @@ public class MainControllerTest {
 
     @BeforeClass
     public static void setUpClass() {
-    	productInfoOne = new ProductInfo("PD1", "ProductOne","A", 100);
-    	productInfoTwo = new ProductInfo("PD2", "ProductTwo","B", 100);
+    	productOne = new Product("PD1", "ProductOne","A", 100.00);
+    	productTwo = new Product("PD2", "ProductTwo","B", 100.00);
         
         cartInfo = new CartInfo();
-        cartInfo.addProduct(productInfoOne, 10);
-        cartInfo.addProduct(productInfoTwo, 10);
+        cartInfo.addProduct(productOne, 10);
+        cartInfo.addProduct(productTwo, 10);
     }
 
     @AfterClass
@@ -66,10 +63,8 @@ public class MainControllerTest {
     public void setUp() {
     	this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
     	mainController = new MainController();
-    	productServiceMock = mock(ProductService.class);
-    	salesTaxServiceMock = mock(SalesTaxService.class);
-        ReflectionTestUtils.setField(mainController, "productService", productServiceMock);
-        ReflectionTestUtils.setField(mainController, "salesTaxService", salesTaxServiceMock);
+    	dataServiceMock = mock(DataService.class);
+        ReflectionTestUtils.setField(mainController, "dataService", dataServiceMock);
     }
 
     @After
@@ -85,9 +80,9 @@ public class MainControllerTest {
                 .andExpect(view().name("productList"))
                 .andExpect(model().attributeExists("listOfProducts"))
                 .andReturn();
-		List productList = (List<ProductInfo>)mvcResult.getModelAndView().getModel().get("listOfProducts");
-		ProductInfo result = (ProductInfo) productList.get(0);
-        assertEquals(result, productInfoOne);
+		List<Product> productList = (List<Product>)(mvcResult.getModelAndView().getModel().get("listOfProducts"));
+		Product result = (Product) productList.get(0);
+        assertEquals(result, productOne);
     }
     
     @Test

@@ -1,0 +1,11 @@
+code,name,price,category
+PD1,ProductOne,100,A
+PD10,ProductTen,400,A
+PD2,ProductTwo,110,B
+PD3,ProductThree,50,C
+PD4,ProductFour,200,A
+PD5,ProductFive,220,B
+PD6,ProductSix,60,C
+PD7,ProductSeven,300,A
+PD8,ProductEight,330,B
+PD9,ProductNine,70,C

@@ -3,6 +3,8 @@ package com.amol.poc.ShoppingCart.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.amol.poc.ShoppingCart.entity.Product;
+
 public class CartInfo {
 	
 	public CartInfo() {
@@ -14,13 +16,13 @@ public class CartInfo {
 		return cartLines;
 	}
 
-	public void addProduct(ProductInfo productInfo, int quantity) {
-        CartLineInfo line = this.findLineByCode(productInfo.getCode());
+	public void addProduct(Product product, int quantity) {
+        CartLineInfo line = this.findLineByCode(product.getCode());
  
         if (line == null) {
             line = new CartLineInfo();
             line.setQuantity(0);
-            line.setProductInfo(productInfo);
+            line.setProduct(product);
             this.cartLines.add(line);
         }
         int newQuantity = line.getQuantity() + quantity;
@@ -33,7 +35,7 @@ public class CartInfo {
 	
 	private CartLineInfo findLineByCode(String code) {
         for (CartLineInfo line : this.cartLines) {
-            if (line.getProductInfo().getCode().equals(code)) {
+            if (line.getProduct().getCode().equals(code)) {
                 return line;
             }
         }
@@ -52,8 +54,8 @@ public class CartInfo {
         }
     }
  
-    public void removeProduct(ProductInfo productInfo) {
-        CartLineInfo line = this.findLineByCode(productInfo.getCode());
+    public void removeProduct(Product product) {
+        CartLineInfo line = this.findLineByCode(product.getCode());
         if (line != null) {
             this.cartLines.remove(line);
         }
@@ -75,7 +77,7 @@ public class CartInfo {
         if (cartForm != null) {
             List<CartLineInfo> lines = cartForm.getCartLines();
             for (CartLineInfo line : lines) {
-                this.updateProduct(line.getProductInfo().getCode(), line.getQuantity());
+                this.updateProduct(line.getProduct().getCode(), line.getQuantity());
             }
         }
  

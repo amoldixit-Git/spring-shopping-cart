@@ -27,14 +27,14 @@
                 varStatus="varStatus">
                 <div class="product-preview-container">
                     <ul>
-                        <li>Code: ${cartLineInfo.productInfo.code} <form:hidden
-                                path="cartLines[${varStatus.index}].productInfo.code" />
+                        <li>Code: ${cartLineInfo.product.code} <form:hidden
+                                path="cartLines[${varStatus.index}].product.code" />
  
                         </li>
-                        <li>Name: ${cartLineInfo.productInfo.name}</li>
+                        <li>Name: ${cartLineInfo.product.name}</li>
                         <li>Price: <span class="price">
                         
-                          <fmt:formatNumber value="${cartLineInfo.productInfo.price}" type="currency"/>
+                          <fmt:formatNumber value="${cartLineInfo.product.price}" type="currency"/>
                           
                         </span></li>
                         <li>Quantity: <form:input
@@ -47,7 +47,7 @@
                           </span>
                         </li> --%>
                         <li><a
-                            href="${pageContext.request.contextPath}/shoppingCartRemoveProduct?code=${cartLineInfo.productInfo.code}">
+                            href="${pageContext.request.contextPath}/shoppingCartRemoveProduct?code=${cartLineInfo.product.code}">
                                 Delete </a></li>
                     </ul>
                 </div>

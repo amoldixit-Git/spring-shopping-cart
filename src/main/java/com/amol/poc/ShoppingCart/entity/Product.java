@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name = "product")
 public class Product implements Serializable {
@@ -20,7 +21,14 @@ public class Product implements Serializable {
     public Product() {
     }
     
-    @Id
+    public Product(String code, String name, String category, double price) {
+    	this.code= code;
+    	this.name=name;
+    	this.category=category;
+    	this.price=price;
+	}
+
+	@Id
     @Column(name = "code", length = 20, nullable = false)
     public String getCode() {
         return code;
@@ -57,6 +65,17 @@ public class Product implements Serializable {
 		this.category = category;
 	}
  
-
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this)
+			return true;
+		if (obj == null || obj.getClass() != this.getClass())
+			return false;
+		Product other = (Product) obj;
+		return code.equals(other.getCode()) && 
+				name.equals(other.name) && 
+				price == other.price && 
+				category.equals(other.category);
+	}
 
 }
